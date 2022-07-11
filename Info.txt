@@ -1,1 +1,14 @@
 Scaffold-DbContext "Server=.\SQLExpress;Database=BookStoresDB;Trusted_Connection=True;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+Scaffold-DbContext -Connection Name=BookStoresDB Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force
+
+ IConfiguration config = new ConfigurationBuilder()
+                          .SetBasePath(Directory.GetCurrentDirectory())
+                          .AddJsonFile("appsettings.json", false, false)
+                          .AddEnvironmentVariables()
+                          .Build();
+
+            if (!optionsBuilder.IsConfigured)
+            {
+                _ = optionsBuilder.UseSqlServer(config.GetConnectionString("BookStoresDB"));
+            }
